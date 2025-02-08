@@ -3,6 +3,8 @@ package jempasam.hexlink.operators.spells
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction
+import at.petrak.hexcasting.api.casting.RenderedSpell
+import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.spell.ParticleSpray
 import at.petrak.hexcasting.api.spell.RenderedSpell
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
@@ -47,19 +49,21 @@ class OpManisfestSpirit(oncaster: Boolean) : SpiritSpellAction(oncaster) {
                 ctx.assertEntityInRange(target.entity)
                 spirit.manifestIn(ctx.castingEntity, ctx.world, target.entity, input.maxcount) to target.entity.pos
             }
-            else -> throw MishapInvalidIota(target, 1, Text.translatable("hexcasting.iota.hexcasting:entity").append(Text.translatable("hexlink.or")).append(Text.translatable("hexcasting.iota.hexcasting:vec3")))
+            else -> throw MishapInvalidIota(target, 0, Text.translatable("hexcasting.iota.hexcasting:entity").append(Text.translatable("hexlink.or")).append(Text.translatable("hexcasting.iota.hexcasting:vec3")))
         }
 
+        if(manifestation.minimumCount>input.maxcount)throw MishapNoEnoughSoul(spirit,manifestation.minimumCount)
         if(manifestation.spiritCount==0)throw MishapNotManifestable(spirit, target)
+        val manisfestedAmount=Math.min(manifestation.spiritCount,input.maxcount)
 
         return SpellAction.Result(
-            ManifestSpell(ctx.world, manifestation, input, sourcePos, targetPos, spirit),
+            ManifestSpell(ctx.world, manifestation, input, sourcePos, targetPos, spirit, manisfestedAmount),
             (manifestation.maxMediaCost*(HexlinkConfiguration.spirit_settings[spirit.getType()]?.media_cost ?: 5)).toLong(),
             listOf(ParticleSpray.burst(targetPos,1.0,1))
         )
     }
 
-    class ManifestSpell(val world: ServerWorld, val manifestation: Spirit.Manifestation, val source: SpiritSource.SpiritOutputFlux, val from: Vec3d, val to: Vec3d, val spirit: Spirit) : RenderedSpell{
+    class ManifestSpell(val world: ServerWorld, val manifestation: Spirit.Manifestation, val source: SpiritSource.SpiritOutputFlux, val from: Vec3d, val to: Vec3d, val spirit: Spirit, val count: Int) : RenderedSpell{
         override fun cast(ctx: CastingEnvironment) {
             source.consume(1)
             manifestation.execute(manifestation.spiritCount)

@@ -9,45 +9,64 @@ import net.minecraft.text.Text
 import net.minecraft.util.Identifier
 
 object HexlinkCreativeTab {
+
     val MAIN_TAB: ItemGroup = ItemGroup.create(null,-1)
         .displayName(Text.translatable(Identifier(HexlinkMod.MODID,"hexlink").toTranslationKey("itemGroup")))
-        .icon { HexlinkItems.UpgradedBook.defaultStack }
-        .entries { context, entries ->
-            HexlinkItems.run {
-                // Items
-                entries.add(UpgradedBook)
-                entries.add(SpecialStaff)
+            .icon { HexlinkItems.MediumBag.defaultStack }
+            .entries{ context, list ->
+                val spirits=HexlinkRegistry.SPECIAL_SPIRIT.entrySet.map { it.value }.toList()
 
-                for(i in 0..<3){
-                    entries.add(MixedPigment.defaultStack.also {
-                        MixedPigment.setColor1(it, (Math.random()*0xFFFFFF).toInt())
-                        MixedPigment.setColor2(it, (Math.random()*0xFFFFFF).toInt())
-                    })
+                list.add(HexlinkItems.BigTablet.defaultStack)
+                list.add(HexlinkItems.BigBag.defaultStack)
+                list.add(HexlinkItems.MediumBag.defaultStack)
+                list.add(HexlinkItems.SmallBag.defaultStack)
+                list.add(HexlinkItems.Tablet.defaultStack)
+
+                list.add(HexlinkItems.PhilosophicalCrystal.let {
+                    val stack=it.defaultStack
+                    it.getSpirits(stack).apply {
+                        add(SpecialSpirit(spirits.random()))
+                        add(SpecialSpirit(spirits.random()))
+                    }
+                    stack
+                })
+
+                list.add(HexlinkItems.HauntedCrystal.let {
+                    val stack=it.defaultStack
+                    it.getSpirits(stack).apply {
+                        add(SpecialSpirit(spirits.random()))
+                        add(SpecialSpirit(spirits.random()))
+                    }
+                    stack
+                })
+
+                list.add(HexlinkItems.TabletStaff.defaultStack)
+                list.add(HexlinkItems.SpiritStaff.defaultStack)
+                list.add(HexlinkItems.BigTabletStaff.defaultStack)
+                list.add(HexlinkItems.PureMediaStaff.defaultStack)
+
+                list.add(HexlinkItems.Vortex.defaultStack)
+
+                for(i in 1..4){
+                    val pigment=HexlinkItems.MixedPigment.defaultStack
+                    HexlinkItems.MixedPigment.setColor1(pigment, (Math.random()*0xFFFFFF).toInt())
+                    HexlinkItems.MixedPigment.setColor2(pigment, (Math.random()*0xFFFFFF).toInt())
+                    list.add(pigment)
                 }
 
-                // Blocks
-                entries.add(Vortex)
-                entries.add(BigTablet)
-
-                // Extractors
-                for(extractors in HexlinkRegistry.EXTRACTOR){
-                    entries.add(Crystal.defaultStack.also { Crystal.setExtractor(it,extractors) })
+                for(extractor in HexlinkRegistry.EXTRACTOR.entrySet){
+                    val stack=HexlinkItems.Crystal.defaultStack
+                    HexlinkItems.Crystal.setExtractor(stack, extractor.value)
+                    list.add(stack)
                 }
 
-                // Containers
-                entries.add(Tablet)
-                entries.add(SmallBag)
-                entries.add(MediumBag)
-                entries.add(BigBag)
-
-                entries.add(HauntedCrystal)
-                for(specialType in HexlinkRegistry.SPECIAL_SPIRIT){
-                    entries.add(Spirit.defaultStack.also { Spirit.setSpirit(it,SpecialSpirit(specialType)) })
-                    entries.add(PhilosophicalCrystal.defaultStack.also { PhilosophicalCrystal.getSpirits(it).add(SpecialSpirit(specialType)) })
+                for(type in HexlinkRegistry.SPECIAL_SPIRIT.entrySet){
+                    val stack=HexlinkItems.Spirit.defaultStack
+                    HexlinkItems.Spirit.setSpirit(stack, SpecialSpirit(type.value))
+                    list.add(stack)
                 }
 
-                entries.add(MixedPigment)
             }
-        }.build()
+            .build()
 
 }

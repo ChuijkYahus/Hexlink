@@ -2,6 +2,7 @@ package jempasam.hexlink.item
 
 import at.petrak.hexcasting.common.items.ItemFocus
 import at.petrak.hexcasting.common.items.storage.ItemFocus
+import at.petrak.hexcasting.common.items.ItemStaff
 import jempasam.hexlink.HexlinkMod
 import jempasam.hexlink.block.HexlinkBlocks
 import jempasam.hexlink.creative_tab.HexlinkCreativeTab
@@ -26,22 +27,24 @@ object HexlinkItems {
     }
 
     val Crystal= make("crystal", ExtractorCatalyzerItem(epicProps()))
+    //val SpirtualStaff=make("spiritual_staff",SpiritualStaffItem(simpleProps()))
+    val MixedPigment=make("mixed_pigment", MixedPigmentItem(stackableProps()))
 
-    var UpgradedBook=make("upgraded_book", UpgradedBookItem(epicProps()))
-    var SpecialStaff=make("special_staff", SpecialWandItem(simpleProps()))
-    //var SpirtualStaff=make("spiritual_staff",SpiritualStaffItem(simpleProps()))
-    var MixedPigment=make("mixed_pigment", MixedPigmentItem(stackableProps()))
+    val Spirit=make("spirit",SingleSpiritContainerItem(stackableProps()))
+    val PhilosophicalCrystal=make("philosophical_crystal",InfiniteSpiritItem(epicProps()))
+    val HauntedCrystal=make("haunted_crystal",RandomSpiritItem(epicProps().maxDamage(100)))
+    val Tablet=make("tablet",SoulContainerItem(simpleProps(), 1, 10))
+    val SmallBag=make("small_bag",SoulContainerItem(simpleProps(), 2, 30))
+    val MediumBag=make("medium_bag",SoulContainerItem(simpleProps(), 5, 100))
+    val BigBag=make("big_bag",SoulContainerItem(simpleProps(), 10, 300))
 
-    var Spirit=make("spirit",SingleSpiritContainerItem(stackableProps()))
-    var PhilosophicalCrystal=make("philosophical_crystal",InfiniteSpiritItem(epicProps()))
-    var HauntedCrystal=make("haunted_crystal",RandomSpiritItem(epicProps().maxDamage(100)))
-    var Tablet=make("tablet",SoulContainerItem(simpleProps(), 1, 10))
-    var SmallBag=make("small_bag",SoulContainerItem(simpleProps(), 2, 30))
-    var MediumBag=make("medium_bag",SoulContainerItem(simpleProps(), 5, 100))
-    var BigBag=make("big_bag",SoulContainerItem(simpleProps(), 10, 300))
+    val Vortex=make("vortex",BlockItem(HexlinkBlocks.VORTEX, stackableProps()))
+    val BigTablet=make("big_tablet",BlockItem(HexlinkBlocks.BIG_TABLET, stackableProps()))
 
-    var Vortex=make("vortex",BlockItem(HexlinkBlocks.VORTEX, stackableProps()))
-    var BigTablet=make("big_tablet",BlockItem(HexlinkBlocks.BIG_TABLET, stackableProps()))
+    val TabletStaff=make("tablet_staff", ItemStaff(simpleProps()))
+    val SpiritStaff=make("spirit_staff", ItemStaff(simpleProps()))
+    val BigTabletStaff=make("big_tablet_on_a_stick", ItemStaff(simpleProps()))
+    val PureMediaStaff=make("pure_media_staff", ItemStaff(simpleProps()))
 
     fun epicProps(): Item.Settings{
         return Item.Settings()

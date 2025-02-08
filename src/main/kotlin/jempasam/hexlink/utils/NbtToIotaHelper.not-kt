@@ -5,7 +5,7 @@ import at.petrak.hexcasting.api.casting.iota.ListIota
 import net.minecraft.nbt.*
 
 object NbtToIotaHelper {
-    fun NbtCompound.toIota(): ListIota {
+    public fun NbtCompound.toIota(): ListIota {
         val ret= mutableListOf<Iota>()
         for(key in this.keys){
             ret.add(ListIota(listOf(StringIota(key),this.get(key)?.toIota())))

@@ -5,9 +5,11 @@ import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import jempasam.hexlink.block.HexlinkBlockClient
 import jempasam.hexlink.config.Config
+import jempasam.hexlink.entity.HexlinkEntityRenderers
 import jempasam.hexlink.item.color.HexlinkColorProviders
 import jempasam.hexlink.lens.HexlinkScryingLensDisplay
 import jempasam.hexlink.model.predicate.HexlinkModelPredicates
+import jempasam.hexlink.network.ClientSendDataPacket
 import jempasam.hexlink.particle.HexlinkClientParticles
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
@@ -41,6 +43,9 @@ object HexlinkModClient : ClientModInitializer {
 		HexlinkBlockClient.registerBlockRender()
 		HexlinkScryingLensDisplay.registerDisplays()
 		HexlinkClientParticles
+		HexlinkEntityRenderers
+		ClientSendDataPacket
+
 		//HudRenderCallback.EVENT.register(SpellHUD())
 	}
 

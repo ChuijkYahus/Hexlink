@@ -2,7 +2,10 @@ package jempasam.hexlink.spirit
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonSyntaxException
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import jempasam.hexlink.HexlinkMod
+import jempasam.hexlink.HexlinkRegistry
+import jempasam.hexlink.utils.NbtHelper
 import jempasam.hexlink.utils.asNBT
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
@@ -71,11 +74,14 @@ interface Spirit {
         return manifestIn(caster,world,from,count)
     }
 
-    class Manifestation(val perSpiritCost: Int, val spiritCount: Int, private val action: (Int)->Unit){
+    class Manifestation(val perSpiritCost:Int, val spiritCount:Int, val minimumCount:Int=0, private val action: (Int)->Unit){
         fun execute(count: Int){
             if(count>spiritCount){
                 HexlinkMod.logger.warn("Try to manifest more spirit than the Manifestation maximum")
                 action(spiritCount)
+            }
+            else if(minimumCount>count){
+                HexlinkMod.logger.warn("Try to manifest less spirit than the Manifestation minimum")
             }
             else action(count)
         }
@@ -130,7 +136,16 @@ interface Spirit {
 
 
     companion object{
+
         const val CANNOT_USE=-1
+
         val NONE_MANIFESTATION=Manifestation(0,0){}
+
+        val CODEC=RecordCodecBuilder.create<Spirit> { inst->
+            inst.group(
+                HexlinkRegistry.SPIRIT.codec .fieldOf("type") .forGetter{it.getType()},
+                NbtHelper.ELEMENT_CODEC .fieldOf("value") .forGetter{it.serialize()}
+            ).apply(inst){ type,value -> type.deserialize(value) }
+        }
     }
 }

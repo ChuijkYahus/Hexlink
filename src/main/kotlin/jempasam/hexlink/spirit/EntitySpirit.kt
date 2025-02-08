@@ -17,6 +17,7 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.ColorHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
+import net.minecraft.world.explosion.Explosion
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sin
 
@@ -29,11 +30,17 @@ class EntitySpirit(val entityType: EntityType<*>): Spirit {
         else
             return Spirit.Manifestation(1,count){
                 for(i in 0..<it){
-                    val summoned = entityType.create(world)
-                    if(summoned!=null) {
-                        summoned.setPosition(position)
-                        modifier(i, summoned)
-                        world.spawnEntity(summoned)
+                    try {
+                        val summoned = entityType.create(world)
+                        if (summoned != null) {
+                            summoned.setPosition(position)
+                            modifier(i, summoned)
+                            world.spawnEntity(summoned)
+                        }
+                    }
+                    catch (e: Exception){
+                        //TODO Find something better
+                        world.createExplosion(null, position.x, position.y, position.z, 1f, Explosion.DestructionType.NONE)
                     }
                 }
             }

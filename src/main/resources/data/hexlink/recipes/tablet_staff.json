@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "key": {
     "I": { "item": "minecraft:stick" },
-    "X": { "item": "minecraft:nether_star" },
+    "X": { "item": "hexlink:tablet" },
     "O": { "item": "hexcasting:charged_amethyst" }
   },
   "pattern": [
@@ -10,5 +10,5 @@
     " XI",
     "I  "
   ],
-  "result": { "item": "hexlink:special_staff" }
+  "result": { "item": "hexlink:tablet_staff" }
 }

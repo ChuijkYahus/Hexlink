@@ -11,6 +11,7 @@ import jempasam.hexlink.operators.OpSpiritTest
 import jempasam.hexlink.operators.OpStub
 import jempasam.hexlink.operators.spells.*
 import jempasam.hexlink.operators.spiritinfo.OpGetSpiritIota
+import jempasam.hexlink.operators.spiritinfo.OpGetSpiritListIota
 import jempasam.hexlink.operators.spiritinfo.OpSpiritCountIota
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.registry.Registry
@@ -45,6 +46,10 @@ object HexlinkPatterns {
         register("spirit_transfer_look",
                 HexPattern.fromAngles("aawddaeqqqqq",HexDir.NORTH_EAST),
                 OpGetSpiritIota(false)
+        )
+        register("spirit_transfer_look_all",
+            HexPattern.fromAngles("aawddaqeeeee",HexDir.NORTH_EAST),
+            OpGetSpiritListIota(false)
         )
 
         register("spirit_self_transfer_look",

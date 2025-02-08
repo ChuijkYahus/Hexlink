@@ -45,8 +45,10 @@ object HexlinkMod : ModInitializer {
 		ExtNodeParsers
 
 		HexlinkDataLoaders
+		SendDataPacket
 
-		Registry.register(HexlinkRegistry.RANK, Identifier(MODID,"testrank"), LevelRanks.Rank(0.1f, 10.0f,DyeColor.YELLOW.fireworkColor))
-
+		HexlinkRegistry.RANK.clear()
+		HexlinkRegistry.RANK.register(Identifier(MODID,"testrank"), LevelRanks.Rank(0.1f, 10.0f,DyeColor.YELLOW.fireworkColor))
+		HexlinkRegistry.RANK.lock()
 	}
 }
