@@ -17,6 +17,7 @@ import jempasam.hexlink.spirit.extractor.SpiritExtractor
 import jempasam.hexlink.spirit.inout.SpiritHelper
 import jempasam.hexlink.spirit.inout.SpiritSource
 import jempasam.hexlink.spirit.inout.SpiritTarget
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
 import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
@@ -83,16 +84,23 @@ fun List<Iota>.getExtractorItem(ctx: CastingEnvironment, index: Int, max: Int): 
     val source=when(val iota=get(index)){
         is EntityIota ->{
             ctx.assertEntityInRange(iota.entity)
-            val stack=StackHelper.stack(ctx.caster, iota.entity)?.stack
-            val item=stack?.item
-            val extractor=if(item is ExtractorItem) item.getExtractor(stack) else null
+            val stack = StackHelper.stack(
+                iota.entity,
+                {it.item is ExtractorItem},
+                StackHelper.inDutyOf(ctx.castingEntity),
+            )?.stack
+            val extractor = if(stack!=null) (stack.item as ExtractorItem).getExtractor(stack) else null
             extractor ?: throw MishapBadEntity(iota.entity, Text.translatable("hexlink.mishap.extractor_item"))
         }
         is Vec3Iota ->{
             ctx.assertVecInRange(iota.vec3)
-            val stack=StackHelper.stack(ctx.caster, ctx.world, iota.vec3)?.stack
-            val item=stack?.item
-            val extractor=if(item is ExtractorItem) item.getExtractor(stack) else null
+            val stack=StackHelper.stack(
+                ctx.world,
+                BlockPos.ofFloored(iota.vec3),
+                {it.item is ExtractorItem},
+                StackHelper.inDutyOf(ctx.castingEntity),
+            )?.stack
+            val extractor = if(stack!=null) (stack.item as ExtractorItem).getExtractor(stack) else null
             extractor ?: throw MishapBadBlock(BlockPos.ofFloored(iota.vec3), Text.translatable("hexlink.mishap.extractor_item"))
         }
         else -> throw MishapInvalidIota(get(index), max-index-1, Text.translatable("hexcasting.iota.hexcasting:entity").append(Text.translatable("hexlink.or")).append(Text.translatable("hexcasting.iota.hexcasting:vec3")))

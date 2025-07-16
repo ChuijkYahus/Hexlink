@@ -5,7 +5,6 @@ import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.effect.StatusEffect
 import net.minecraft.entity.effect.StatusEffectInstance
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtString
 import net.minecraft.registry.Registries
@@ -17,7 +16,7 @@ import kotlin.jvm.optionals.getOrNull
 
 class PotionSpirit(val potionEffect: StatusEffect): Spirit  {
 
-    override fun manifestAt(caster: PlayerEntity, world: ServerWorld, position: Vec3d, count: Int): Spirit.Manifestation {
+    override fun manifestAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d, count: Int): Spirit.Manifestation {
         return Spirit.Manifestation(1,count){
             val effect=StatusEffectInstance(potionEffect, it*100, it/4)
             val cloud=EntityType.AREA_EFFECT_CLOUD.create(world)
@@ -34,7 +33,7 @@ class PotionSpirit(val potionEffect: StatusEffect): Spirit  {
 
 
 
-    override fun manifestIn(caster: PlayerEntity, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation {
+    override fun manifestIn(caster: LivingEntity?, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation {
         if(entity !is LivingEntity)
             return Spirit.NONE_MANIFESTATION
         else
@@ -46,11 +45,11 @@ class PotionSpirit(val potionEffect: StatusEffect): Spirit  {
 
 
 
-    override fun lookIn(caster: PlayerEntity, world: ServerWorld, entity: Entity): Boolean {
+    override fun lookIn(caster: LivingEntity?, world: ServerWorld, entity: Entity): Boolean {
         return (entity is LivingEntity && entity.statusEffects.any { effect -> effect.effectType==potionEffect })
     }
 
-    override fun lookAt(caster: PlayerEntity, world: ServerWorld, position: Vec3d): Boolean {
+    override fun lookAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d): Boolean {
         return false
     }
 

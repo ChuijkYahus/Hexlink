@@ -1,6 +1,6 @@
 {
-  "name": "hexcasting.spell.hexlink:spirit_extraction",
-  "category": "hexlink:patterns/spirits",
+  "name": "hexcasting.action.hexlink:spirit_extraction",
+  "category": "hexcasting:patterns/spirits",
   "icon": "hexlink:crystal{extractor:\"hexlink:everything\"}",
   "sortnum": 1,
   "advancement": "hexcasting:root",

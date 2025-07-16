@@ -12,7 +12,7 @@ import net.minecraft.world.World
 object RecipeHelper {
 
     private val NONE_HANDLER=object:ScreenHandler(null,-1){
-        override fun transferSlot(player: PlayerEntity?, index: Int): ItemStack = ItemStack.EMPTY
+        override fun quickMove(player: PlayerEntity?, index: Int): ItemStack = ItemStack.EMPTY
         override fun canUse(player: PlayerEntity?): Boolean = true
         override fun isValid(slot: Int): Boolean = true
     }
@@ -71,7 +71,7 @@ object RecipeHelper {
                 }
                 else craft.setStack(i,ItemStack.EMPTY)
             }
-            if(recipe.matches(craft,world))return recipe.craft(craft) to ingredients.size
+            if(recipe.matches(craft,world))return recipe.craft(craft,world.registryManager) to ingredients.size
         }
         return null
     }

@@ -1,14 +1,9 @@
 package jempasam.hexlink.spirit
 
-import com.mojang.brigadier.context.CommandContext
-import net.minecraft.block.CommandBlock
-import net.minecraft.command.CommandSource
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.nbt.NbtElement
-import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
@@ -38,15 +33,13 @@ class FunctionSpirit(val manifestAt: Identifier, val manifestIn: Identifier, val
 
     override fun manifestIn(caster: LivingEntity?, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation {
         val function=world.server.commandFunctionManager.getFunction(manifestIn)
-        if(function.isEmpty)
-            return Spirit.NONE_MANIFESTATION
-        else
-            return Spirit.Manifestation(manifestInCost, count){
-                for(i in 0..<it){
-                    val source=caster.commandSource.withEntity(entity).withPosition(entity.pos).withLevel(3)
-                    world.server.commandFunctionManager.execute(function.get(),source)
-                }
+        if(function.isEmpty) return Spirit.NONE_MANIFESTATION
+        else return Spirit.Manifestation(manifestInCost, count){
+            for(i in 0..<it){
+                val source=(caster?.commandSource ?: world.server.commandSource).withEntity(entity).withPosition(entity.pos).withLevel(3)
+                world.server.commandFunctionManager.execute(function.get(),source)
             }
+        }
     }
 
     override fun lookAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d): Boolean = false

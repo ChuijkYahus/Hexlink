@@ -7,7 +7,7 @@ import net.minecraft.util.JsonHelper
 
 class FilterItemExtNode(val predicate: ItemPredicate, val not: Boolean) : ExtractionNode {
     override fun filter(source: ExtractionNode.Source): ExtractionNode.Source {
-        val target=StackHelper.stack(source.caster,source.entity)
+        val target=StackHelper.stack(source.entity, if_entity=StackHelper.inDutyOf(source.caster))
         return if(target!=null && predicate.test(target.stack) != not) source else source.with {count=0}
     }
 

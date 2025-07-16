@@ -7,12 +7,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
-import at.petrak.hexcasting.common.network.MsgShiftScrollSyn;
+import at.petrak.hexcasting.common.msgs.MsgShiftScrollC2S;
 import net.minecraft.util.Hand;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-@Mixin(MsgShiftScrollSyn.class)
+@Mixin(MsgShiftScrollC2S.class)
 class MsgShiftScrollSynMixin{
 
     @Inject(at = @At("TAIL"), method = "handleForHand")

@@ -2,7 +2,6 @@ package jempasam.hexlink.spirit
 
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.DyeItem
 import net.minecraft.item.DyeableItem
 import net.minecraft.item.Item
@@ -13,6 +12,7 @@ import net.minecraft.nbt.NbtInt
 import net.minecraft.particle.DustParticleEffect
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.ColorHelper
 import net.minecraft.util.math.Vec3d
 import org.joml.Vector3f
@@ -58,7 +58,7 @@ class ColorSpirit(private val color: Int) : Spirit {
     }
 
     override fun manifestIn(caster: LivingEntity?, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation
-        = colorize(StackHelper.stack(caster as? PlayerEntity,entity))
+        = colorize(StackHelper.stack(entity, if_entity=StackHelper.inDutyOf(caster)))
 
 
     fun testColor(stack: StackHelper.WorldStack?): Boolean{
@@ -70,10 +70,10 @@ class ColorSpirit(private val color: Int) : Spirit {
         return false
     }
     override fun lookAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d): Boolean
-            = testColor(StackHelper.stack(caster as? PlayerEntity,world,position))
+            = testColor(StackHelper.stack(world, BlockPos.ofFloored(position), if_entity=StackHelper.inDutyOf(caster)))
 
     override fun lookIn(caster: LivingEntity?, world: ServerWorld, entity: Entity): Boolean
-            = testColor(StackHelper.stack(caster as? PlayerEntity,entity))
+            = testColor(StackHelper.stack(entity))
 
 
 

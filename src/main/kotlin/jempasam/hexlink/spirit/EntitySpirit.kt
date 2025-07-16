@@ -17,7 +17,6 @@ import net.minecraft.util.math.Box
 import net.minecraft.util.math.ColorHelper
 import net.minecraft.util.math.Vec3d
 import net.minecraft.world.World
-import net.minecraft.world.explosion.Explosion
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.sin
 
@@ -40,7 +39,7 @@ class EntitySpirit(val entityType: EntityType<*>): Spirit {
                     }
                     catch (e: Exception){
                         //TODO Find something better
-                        world.createExplosion(null, position.x, position.y, position.z, 1f, Explosion.DestructionType.NONE)
+                        world.createExplosion(null, position.x, position.y, position.z, 1f, World.ExplosionSourceType.NONE)
                     }
                 }
             }

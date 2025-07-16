@@ -13,25 +13,25 @@
   "emi.category.hexlink.vortex": "涡旋合成",
 
  
-  "hexcasting.spell.hexlink:spirit_extraction": "灵体提取",
-  "hexcasting.spell.hexlink:spirit_transfer": "灵体转移",
-  "hexcasting.spell.hexlink:spirit_transfer_look": "灵体容器探察",
-  "hexcasting.spell.hexlink:spirit_transfer_look_all": "灵体容器探察全部",
-  "hexcasting.spell.hexlink:spirit_self_transfer_look": "自身灵体容器探察",
-  "hexcasting.spell.hexlink:spirit_transfer_count": "灵体容器计数",
-  "hexcasting.spell.hexlink:spirit_self_transfer_count": "自身灵体容器计数",
+  "hexcasting.action.hexlink:spirit_extraction": "灵体提取",
+  "hexcasting.action.hexlink:spirit_transfer": "灵体转移",
+  "hexcasting.action.hexlink:spirit_transfer_look": "灵体容器探察",
+  "hexcasting.action.hexlink:spirit_transfer_look_all": "灵体容器探察全部",
+  "hexcasting.action.hexlink:spirit_self_transfer_look": "自身灵体容器探察",
+  "hexcasting.action.hexlink:spirit_transfer_count": "灵体容器计数",
+  "hexcasting.action.hexlink:spirit_self_transfer_count": "自身灵体容器计数",
 
-  "hexcasting.spell.hexlink:spirit_vortex": "涡旋成型",
-  "hexcasting.spell.hexlink:spirit_manifestation": "灵体显形",
-  "hexcasting.spell.hexlink:spirit_self_manifestation": "自身灵体显形",
-  "hexcasting.spell.hexlink:spirit_look": "灵体探察",
+  "hexcasting.action.hexlink:spirit_vortex": "涡旋成型",
+  "hexcasting.action.hexlink:spirit_manifestation": "灵体显形",
+  "hexcasting.action.hexlink:spirit_self_manifestation": "自身灵体显形",
+  "hexcasting.action.hexlink:spirit_look": "灵体探察",
 
 
-  "hexcasting.spell.hexlink:read_trinket": "伯默之精思",
-  "hexcasting.spell.hexlink:write_trinket": "伯默之策略",
-  "hexcasting.spell.hexlink:write_spell": "弗莱姆之策略",
-  "hexcasting.spell.hexlink:get_nbt": "撒母耳之纯化",
-  "hexcasting.spell.hexlink:find_nbt": "加百列之馏化",
+  "hexcasting.action.hexlink:read_trinket": "伯默之精思",
+  "hexcasting.action.hexlink:write_trinket": "伯默之策略",
+  "hexcasting.action.hexlink:write_spell": "弗莱姆之策略",
+  "hexcasting.action.hexlink:get_nbt": "撒母耳之纯化",
+  "hexcasting.action.hexlink:find_nbt": "加百列之馏化",
 
 
 

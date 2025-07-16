@@ -1,6 +1,6 @@
 {
   "name": "hexlink.page.spirit_other",
-  "category": "hexlink:patterns/spirits",
+  "category": "hexcasting:patterns/spirits",
   "icon": "hexlink:vortex",
   "sortnum": 4,
   "advancement": "hexcasting:root",

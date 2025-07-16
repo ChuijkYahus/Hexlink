@@ -5,12 +5,13 @@ import jempasam.hexlink.spirit.Spirit
 import jempasam.hexlink.spirit.inout.SpiritHelper
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.world.World
 
 interface HexVortexHandler {
 
     fun findRecipe(ingredients: Collection<Spirit>, world: ServerWorld): Recipe?
 
-    fun getRecipesExamples(manager: RecipeManager): Sequence<Pair<List<Ingredient>,List<Spirit>>> = sequenceOf()
+    fun getRecipesExamples(world: World): Sequence<Pair<List<Ingredient>,List<Spirit>>> = sequenceOf()
 
     fun serialize(json: JsonObject)
 
@@ -26,10 +27,8 @@ interface HexVortexHandler {
         constructor(ingredient: net.minecraft.recipe.Ingredient?): this(
                 if(ingredient==null) sequenceOf<Spirit>()
                 else sequence {
-                    for(e in ingredient.entries){
-                        for(s in e.stacks){
-                            yield(SpiritHelper.asSpirit(s.item))
-                        }
+                    for(s in ingredient.matchingStacks){
+                        yield(SpiritHelper.asSpirit(s.item))
                     }
                 },
                 ingredient.hashCode()

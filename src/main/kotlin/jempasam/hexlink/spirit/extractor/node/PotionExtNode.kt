@@ -14,7 +14,7 @@ object PotionExtNode : ExtractionNode {
 
     private val POTION_ITEMS=setOf(Items.POTION, Items.LINGERING_POTION, Items.SPLASH_POTION)
     override fun filter(source: ExtractionNode.Source): ExtractionNode.Source {
-        val worldStack=StackHelper.stack(source.caster,source.entity)
+        val worldStack=StackHelper.stack(source.entity, if_entity=StackHelper.inDutyOf(source.caster))
         worldStack ?: return source
         val stack=worldStack.stack
 

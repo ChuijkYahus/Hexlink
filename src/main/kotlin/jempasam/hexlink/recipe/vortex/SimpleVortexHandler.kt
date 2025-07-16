@@ -6,8 +6,8 @@ import jempasam.hexlink.spirit.Spirit
 import jempasam.hexlink.utils.asSpirit
 import jempasam.hexlink.utils.read
 import jempasam.hexlink.utils.toJSON
-import net.minecraft.recipe.RecipeManager
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.world.World
 
 open class SimpleVortexHandler(private var catalyzer: List<Spirit>, var output: List<Spirit>): CatalyzedVortexHandler {
 
@@ -34,7 +34,7 @@ open class SimpleVortexHandler(private var catalyzer: List<Spirit>, var output: 
         return null
     }
 
-    override fun getRecipesExamples(manager: RecipeManager): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>
+    override fun getRecipesExamples(world: World): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>
         = sequenceOf( catalyzer.asSequence().map { HexVortexHandler.Ingredient(it) }.toMutableList() to output)
 
     open class Recipe(private val handler: SimpleVortexHandler): HexVortexHandler.Recipe {

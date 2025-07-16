@@ -1,17 +1,12 @@
 package jempasam.hexlink.operators
 
 import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
-import at.petrak.hexcasting.api.spell.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.BooleanIota
 import at.petrak.hexcasting.api.casting.iota.EntityIota
-import at.petrak.hexcasting.api.spell.iota.BooleanIota
-import at.petrak.hexcasting.api.spell.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
-import at.petrak.hexcasting.api.spell.iota.Vec3Iota
-import at.petrak.hexcasting.api.spell.mishaps.MishapInvalidIota
 import jempasam.hexlink.iota.SpiritIota
 import net.minecraft.text.Text
 

@@ -6,12 +6,12 @@ import net.minecraft.enchantment.Enchantment
 import net.minecraft.enchantment.EnchantmentHelper
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.nbt.NbtElement
 import net.minecraft.registry.Registries
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.util.DyeColor
+import net.minecraft.util.math.BlockPos
 import net.minecraft.util.math.Vec3d
 import kotlin.math.min
 
@@ -26,10 +26,10 @@ class EnchantmentSpirit(val enchantment: Enchantment): Spirit {
     override fun hashCode(): Int = enchantment.hashCode()*39
 
     override fun manifestAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d, count: Int): Spirit.Manifestation {
-        return manifestStack(StackHelper.stack(caster as? PlayerEntity,world,position), count)
+        return manifestStack(StackHelper.stack(world, BlockPos.ofFloored(position), if_entity=StackHelper.inDutyOf(caster)), count)
     }
     override fun manifestIn(caster: LivingEntity?, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation {
-        return manifestStack(StackHelper.stack(caster as? PlayerEntity,entity), count)
+        return manifestStack(StackHelper.stack(entity, if_entity=StackHelper.inDutyOf(caster)), count)
     }
     private fun manifestStack(worldStack: StackHelper.WorldStack?, count: Int): Spirit.Manifestation{
         if(worldStack==null)return Spirit.NONE_MANIFESTATION
@@ -45,10 +45,10 @@ class EnchantmentSpirit(val enchantment: Enchantment): Spirit {
     }
 
     override fun lookIn(caster: LivingEntity?, world: ServerWorld, entity: Entity): Boolean {
-        return lookStack(StackHelper.stack(caster as? PlayerEntity,entity))
+        return lookStack(StackHelper.stack(entity, if_entity=StackHelper.inDutyOf(caster)))
     }
     override fun lookAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d): Boolean {
-        return lookStack(StackHelper.stack(caster as? PlayerEntity,world,position))
+        return lookStack(StackHelper.stack(world, BlockPos.ofFloored(position), if_entity=StackHelper.inDutyOf(caster)))
     }
     private fun lookStack(worldStack: StackHelper.WorldStack?): Boolean{
         return worldStack!=null && EnchantmentHelper.getLevel(enchantment,worldStack.stack)!=0

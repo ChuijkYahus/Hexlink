@@ -4,7 +4,6 @@ import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.FallingBlockEntity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.nbt.NbtElement
@@ -82,7 +81,7 @@ class BlockSpirit(val block: Block): Spirit{
     }
 
     override fun lookIn(caster: LivingEntity?, world: ServerWorld, entity: Entity): Boolean {
-        val stack= StackHelper.stack(caster,entity) ?: return false
+        val stack= StackHelper.stack(entity, {true}, StackHelper.inDutyOf(caster)) ?: return false
         val item=stack.stack.item
         if(item !is BlockItem)return false
         return item.block==block

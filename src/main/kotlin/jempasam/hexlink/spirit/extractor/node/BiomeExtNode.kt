@@ -2,14 +2,12 @@ package jempasam.hexlink.spirit.extractor.node
 
 import com.google.gson.JsonObject
 import com.mojang.serialization.Codec
-import jempasam.hexlink.spirit.BiomeSpirit
-import net.minecraft.util.math.BlockPos
 
 object BiomeExtNode : ExtractionNode {
     override fun filter(source: ExtractionNode.Source): ExtractionNode.Source {
-        val biome=source.entity.world.getBiome(BlockPos(source.entity.pos))
+        //TODO val biome=source.entity.world.getBiome(BlockPos(source.entity.pos))
         return source.with {
-            spirit=BiomeSpirit(biome)
+            //TODO spirit=BiomeSpirit(biome)
         }
     }
 

@@ -3,7 +3,6 @@
   "package": "jempasam.hexlink.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "LootManagerMixin",
     "MsgShiftScrollSynMixin",
     "ShiftScrollListenerMixin"
   ],

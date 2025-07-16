@@ -10,7 +10,7 @@ import net.minecraft.enchantment.EnchantmentHelper
 object EnchantmentExtNode : ExtractionNode {
 
     override fun filter(source: ExtractionNode.Source): ExtractionNode.Source {
-        val worldStack= StackHelper.stack(source.caster,source.entity) ?: return source
+        val worldStack= StackHelper.stack(source.entity, if_entity=StackHelper.inDutyOf(source.caster)) ?: return source
         val enchantments= EnchantmentHelper.get(worldStack.stack)
         if(enchantments.isEmpty())return source
         val extracted=enchantments.entries.first()

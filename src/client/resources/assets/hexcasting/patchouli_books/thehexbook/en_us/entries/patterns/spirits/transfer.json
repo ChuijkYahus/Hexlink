@@ -1,6 +1,6 @@
 {
-  "name": "hexcasting.spell.hexlink:spirit_transfer",
-  "category": "hexlink:patterns/spirits",
+  "name": "hexcasting.action.hexlink:spirit_transfer",
+  "category": "hexcasting:patterns/spirits",
   "icon": "hexlink:small_bag{spirit:{type:\"hexlink:entity\",value:\"minecraft:magma_cube\"}}",
   "sortnum": 2,
   "advancement": "hexcasting:root",

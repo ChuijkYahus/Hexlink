@@ -3,8 +3,8 @@ package jempasam.hexlink.spirit
 import jempasam.hexlink.HexlinkMod
 import jempasam.hexlink.HexlinkRegistry
 import jempasam.hexlink.spirit.extractor.NodeExtractor
-import net.minecraft.util.Identifier
 import net.minecraft.registry.Registry
+import net.minecraft.util.Identifier
 
 
 @Suppress("unused")
@@ -24,7 +24,7 @@ object HexlinkSpirits {
     val POTION_SPIRIT= create("potion", PotionSpirit.Type)
     val BLOCK_SPIRIT= create("block", BlockSpirit.Type)
     val ENCHANTMENT_SPIRIT= create("enchantment", EnchantmentSpirit.Type)
-    val BIOME_SPIRIT= create("biome", BiomeSpirit.Type)
+    //val BIOME_SPIRIT= create("biome", BiomeSpirit.Type)
     val COLOR_SPIRIT= create("color", ColorSpirit.Type)
     val FUNCTION_SPIRIT= create("function", FunctionSpirit.Type)
     val SPECIAL_SPIRIT= create("special", SpecialSpirit.Type)

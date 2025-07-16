@@ -6,8 +6,8 @@ import jempasam.hexlink.spirit.Spirit
 import jempasam.hexlink.utils.asSpirit
 import jempasam.hexlink.utils.read
 import jempasam.hexlink.utils.toJSON
-import net.minecraft.recipe.RecipeManager
 import net.minecraft.server.world.ServerWorld
+import net.minecraft.world.World
 
 abstract class AbstractVortexHandler(private var catalyzer: List<Spirit>, var output: List<Spirit>): CatalyzedVortexHandler {
 
@@ -36,8 +36,8 @@ abstract class AbstractVortexHandler(private var catalyzer: List<Spirit>, var ou
 
     abstract fun findRealRecipe(ingredients: Collection<Spirit>, world: ServerWorld): Recipe?
 
-    final override fun getRecipesExamples(manager: RecipeManager): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>> {
-        return getRealRecipesExamples(manager).map {
+    final override fun getRecipesExamples(world: World): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>> {
+        return getRealRecipesExamples(world).map {
             val i=catalyzer.asSequence().map { HexVortexHandler.Ingredient(it) }.toMutableList()
             val o=it.second.toMutableList()
             i.addAll(it.first)
@@ -46,7 +46,7 @@ abstract class AbstractVortexHandler(private var catalyzer: List<Spirit>, var ou
         }
     }
 
-    abstract fun getRealRecipesExamples(manager: RecipeManager): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>
+    abstract fun getRealRecipesExamples(world: World): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>
 
     abstract class Recipe(private val handler: AbstractVortexHandler): HexVortexHandler.Recipe {
         final override fun ingredientCount(): Int = handler.catalyzer.size + realIngredientCount()

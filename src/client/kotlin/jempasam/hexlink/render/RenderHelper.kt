@@ -1,23 +1,13 @@
 package jempasam.hexlink.render
 
-import at.petrak.hexcasting.api.spell.math.HexPattern
-import com.mojang.blaze3d.systems.RenderSystem
-import net.minecraft.client.render.GameRenderer
-import net.minecraft.client.render.Tessellator
-import net.minecraft.client.render.VertexFormat
-import net.minecraft.client.render.VertexFormats
-import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.util.math.ColorHelper
-import net.minecraft.util.math.Quaternion
-import net.minecraft.util.math.Vec2f
-import net.minecraft.util.math.Vec3f
 
 object RenderHelper {
 
     var lineWidth: Int=4
     var color: Int=ColorHelper.Argb.getArgb(255, 0, 0, 255)
 
-    fun renderLine(stack: MatrixStack, x1: Float, y1: Float, x2: Float, y2: Float){
+    /*fun renderLine(stack: MatrixStack, x1: Float, y1: Float, x2: Float, y2: Float){
         val direction=Vec2f(x2-x1, y2-y1).normalize().multiply(lineWidth/2.0f)
         val sidex=direction.y
         val sidey=-direction.x
@@ -92,5 +82,5 @@ object RenderHelper {
             if(dest.y<miny)miny=dest.y
         }
         return Vec2f(maxx-minx, maxy-miny) to Vec2f(0-minx, 0-miny)
-    }
+    }*/
 }

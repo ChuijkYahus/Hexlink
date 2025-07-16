@@ -11,6 +11,7 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapBadEntity
 import at.petrak.hexcasting.api.casting.mishaps.MishapOthersName
 import jempasam.hexlink.item.functionnality.SpellHolderItem
 import jempasam.hexlink.spirit.StackHelper
+import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
 
 class OpFillSpell(val cost: Int) : SpellAction {
@@ -20,7 +21,7 @@ class OpFillSpell(val cost: Int) : SpellAction {
         val entity=args.getEntity(0, argc)
         val spell=args.getList(1,argc).toList()
 
-        val world_stack=StackHelper.stack(ctx.caster,entity)
+        val world_stack = if(entity is PlayerEntity && entity!=ctx.caster) null else StackHelper.stack(entity, {true}, StackHelper.inDutyOf(ctx.castingEntity))
 
         if(world_stack==null || world_stack.stack.item !is SpellHolderItem){
             throw MishapBadEntity(entity, Text.translatable("hexlink.mishap.spell_holder"))

@@ -14,6 +14,7 @@ import jempasam.hexlink.spirit.BlockSpirit
 import jempasam.hexlink.spirit.ItemSpirit
 import jempasam.hexlink.spirit.SpecialSpirit
 import jempasam.hexlink.spirit.Spirit
+import net.minecraft.client.MinecraftClient
 import net.minecraft.item.Items
 import net.minecraft.util.Identifier
 
@@ -48,7 +49,7 @@ class HexlinkEMIPlugin : EmiPlugin{
 
         // Stacks
         val spirits_stacks= HexlinkRegistry.HEXVORTEX_HANDLER.asSequence()
-                .flatMap { it.getRecipesExamples(registry.recipeManager) }
+                .flatMap { it.getRecipesExamples(MinecraftClient.getInstance().world!!) }
                 .flatMap { it.second }
                 .filter {it !is ItemSpirit && it !is BlockSpirit }
                 .toMutableSet()
@@ -72,7 +73,7 @@ class HexlinkEMIPlugin : EmiPlugin{
         // Recipes
         for(handler in HexlinkRegistry.HEXVORTEX_HANDLER.entrySet){
             var i=0
-            for(recipe in handler.value.getRecipesExamples(registry.recipeManager)){
+            for(recipe in handler.value.getRecipesExamples(MinecraftClient.getInstance().world!!)){
                 val id=Identifier(handler.key.value.namespace, handler.key.value.path+i)
                 registry.addRecipe(VortexEmiRecipe(id, recipe.first, recipe.second))
                 i++

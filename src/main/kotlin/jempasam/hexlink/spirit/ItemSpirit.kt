@@ -1,12 +1,13 @@
 package jempasam.hexlink.spirit
 
 import com.google.common.base.Predicates
+import net.fabricmc.fabric.api.entity.FakePlayer
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.LivingEntity
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import net.minecraft.item.ItemUsageContext
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtString
@@ -42,62 +43,56 @@ class ItemSpirit(val item: Item): Spirit {
     }
 
 
-    override fun manifestAt(caster: PlayerEntity, world: ServerWorld, position: Vec3d, count: Int): Spirit.Manifestation {
+    override fun manifestAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d, count: Int): Spirit.Manifestation {
         return Spirit.Manifestation(1,count){
-            val stack=item.defaultStack
-            stack.count=it
-            val oldHandItem=caster.mainHandStack
-            caster.setStackInHand(Hand.MAIN_HAND,stack)
+            val player = FakePlayer.get(world)
+            player.setStackInHand(Hand.MAIN_HAND, ItemStack(item,it))
             for(i in 0..<it){
                 item.useOnBlock(
-                        ItemUsageContext(
-                                caster,
-                                Hand.MAIN_HAND,
-                                BlockHitResult(position, Direction.UP, BlockPos.ofFloored(position), true)
-                        )
+                    ItemUsageContext(
+                        player,
+                        Hand.MAIN_HAND,
+                        BlockHitResult(position, Direction.UP, BlockPos.ofFloored(position), true)
+                    )
                 )
             }
-            caster.setStackInHand(Hand.MAIN_HAND, oldHandItem)
         }
     }
 
-    override fun manifestIn(caster: PlayerEntity, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation {
+    override fun manifestIn(caster: LivingEntity?, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation {
         return Spirit.Manifestation(1,count){
-            val stack=item.defaultStack
-            stack.count=it
-            val oldHandItem=caster.mainHandStack
-            caster.setStackInHand(Hand.MAIN_HAND,stack)
+            val player = FakePlayer.get(world)
+            player.setStackInHand(Hand.MAIN_HAND,ItemStack(item,it))
             if(entity==caster){
                 for(i in 0..<it){
-                    val action=item.getUseAction(stack)
-                    val success=item.use(world, caster, Hand.MAIN_HAND)
+                    val action=item.getUseAction(player.mainHandStack)
+                    val success=item.use(world, player, Hand.MAIN_HAND)
                     if(action!=UseAction.NONE && action!=UseAction.BLOCK && success.result.isAccepted){
-                        item.onStoppedUsing(stack, world, caster, 0)
-                        item.finishUsing(stack,world,caster)
+                        item.onStoppedUsing(player.mainHandStack, world, caster, 0)
+                        item.finishUsing(player.mainHandStack, world, caster)
                     }
                 }
             }
             else{
                 for(i in 0..<it) {
                     if (entity is LivingEntity) {
-                        item.useOnEntity(stack, caster, entity, Hand.MAIN_HAND)
+                        item.useOnEntity(player.mainHandStack, player, entity, Hand.MAIN_HAND)
                     }
-                    entity.interact(caster, Hand.MAIN_HAND)
+                    entity.interact(player, Hand.MAIN_HAND)
                 }
             }
-            caster.setStackInHand(Hand.MAIN_HAND, oldHandItem)
         }
     }
 
 
 
-    override fun lookIn(caster: PlayerEntity, world: ServerWorld, entity: Entity): Boolean {
-        val stack= StackHelper.stack(caster,entity) ?: return false
+    override fun lookIn(caster: LivingEntity?, world: ServerWorld, entity: Entity): Boolean {
+        val stack= StackHelper.stack(entity, if_entity=StackHelper.inDutyOf(caster)) ?: return false
         val item=stack.stack.item
         return item==this.item
     }
 
-    override fun lookAt(caster: PlayerEntity, world: ServerWorld, position: Vec3d): Boolean {
+    override fun lookAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d): Boolean {
         val entities=world.getEntitiesByType( EntityType.ITEM, Box.of(position, 0.7, 0.7, 0.7), Predicates.alwaysTrue())
         return entities.any { entity -> entity.stack.item==item }
     }

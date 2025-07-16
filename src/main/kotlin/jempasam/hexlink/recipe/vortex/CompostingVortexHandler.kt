@@ -7,9 +7,9 @@ import jempasam.hexlink.spirit.inout.SpiritHelper
 import jempasam.hexlink.utils.addSpirit
 import jempasam.hexlink.utils.getSpirit
 import net.minecraft.block.ComposterBlock
-import net.minecraft.recipe.RecipeManager
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.JsonHelper.getFloat
+import net.minecraft.world.World
 import kotlin.math.ceil
 
 class CompostingVortexHandler : AbstractVortexHandler {
@@ -52,7 +52,7 @@ class CompostingVortexHandler : AbstractVortexHandler {
         return Recipe(count, this)
     }
 
-    override fun getRealRecipesExamples(manager: RecipeManager): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>> {
+    override fun getRealRecipesExamples(world: World): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>> {
         return sequence {
             ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.asSequence()
                 // Associate item to input count

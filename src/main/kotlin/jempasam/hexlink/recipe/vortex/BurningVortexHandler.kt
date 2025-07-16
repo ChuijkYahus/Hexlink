@@ -7,10 +7,10 @@ import jempasam.hexlink.spirit.inout.SpiritHelper
 import jempasam.hexlink.utils.addSpirit
 import jempasam.hexlink.utils.getSpirit
 import net.fabricmc.fabric.api.registry.FuelRegistry
-import net.minecraft.recipe.RecipeManager
 import net.minecraft.registry.Registries
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.JsonHelper.getFloat
+import net.minecraft.world.World
 import kotlin.math.max
 
 class BurningVortexHandler : AbstractVortexHandler {
@@ -55,7 +55,7 @@ class BurningVortexHandler : AbstractVortexHandler {
         return null
     }
 
-    override fun getRealRecipesExamples(manager: RecipeManager): Sequence<Pair<List<Ingredient>, List<Spirit>>> {
+    override fun getRealRecipesExamples(world: World): Sequence<Pair<List<Ingredient>, List<Spirit>>> {
         return sequence {
             Registries.ITEM.entrySet.asSequence()
                 // Associate cookable item to result count

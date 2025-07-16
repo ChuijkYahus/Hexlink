@@ -68,7 +68,7 @@ object SpiritHelper{
             return blocktype.getSpiritTarget(world, bpos)
         }
 
-        val worldStack=StackHelper.stack(caster, world, pos)
+        val worldStack=StackHelper.stack(world, BlockPos.ofFloored(pos), if_entity=StackHelper.inDutyOf(caster))
         if(worldStack!=null){
             val item=worldStack.stack.item
             if(item is ItemSpiritTarget)return StackUpdateSpiritTarget(worldStack, item.getSpiritTarget(worldStack.stack))
@@ -84,7 +84,7 @@ object SpiritHelper{
 
         if(entity is SpiritTarget)return entity
 
-        val worldStack=StackHelper.stack(caster, entity)
+        val worldStack=StackHelper.stack(entity, if_entity=StackHelper.inDutyOf(caster))
         if(worldStack!=null){
             val item=worldStack.stack.item
             if(item is ItemSpiritTarget)return StackUpdateSpiritTarget(worldStack, item.getSpiritTarget(worldStack.stack))
@@ -158,7 +158,7 @@ object SpiritHelper{
         val blocktype=state.block
         if(blocktype is BlockSpiritSource)return blocktype.getSpiritSource(world, bpos)
 
-        val worldStack=StackHelper.stack(caster, world, pos)
+        val worldStack=StackHelper.stack(world, BlockPos.ofFloored(pos), if_entity=StackHelper.inDutyOf(caster))
         if(worldStack!=null){
             val item=worldStack.stack.item
             if(item is ItemSpiritSource)return StackUpdateSpiritSource(worldStack, item.getSpiritSource(worldStack.stack))
@@ -173,7 +173,7 @@ object SpiritHelper{
 
         if(entity is SpiritSource)return entity
 
-        val worldStack=StackHelper.stack(caster, entity)
+        val worldStack=StackHelper.stack(entity, if_entity=StackHelper.inDutyOf(caster))
         if(worldStack!=null){
             val item=worldStack.stack.item
             if(item is ItemSpiritSource)return StackUpdateSpiritSource(worldStack, item.getSpiritSource(worldStack.stack))

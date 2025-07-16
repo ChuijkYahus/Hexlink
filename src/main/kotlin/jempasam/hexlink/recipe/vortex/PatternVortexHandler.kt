@@ -2,11 +2,13 @@ package jempasam.hexlink.recipe.vortex
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParseException
+import com.mojang.authlib.minecraft.client.MinecraftClient
 import jempasam.hexlink.recipe.vortex.BurningVortexHandler.PARSER
 import jempasam.hexlink.spirit.ItemSpirit
 import jempasam.hexlink.spirit.Spirit
 import jempasam.hexlink.spirit.inout.SpiritHelper
 import jempasam.hexlink.utils.asNBT
+import net.fabricmc.fabric.api.event.registry.DynamicRegistries
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.inventory.CraftingInventory
 import net.minecraft.item.Item
@@ -15,9 +17,14 @@ import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.recipe.ShapedRecipe
+import net.minecraft.registry.DynamicRegistryManager
+import net.minecraft.registry.Registries
 import net.minecraft.screen.ScreenHandler
+import net.minecraft.server.MinecraftServer
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.JsonHelper
+import net.minecraft.world.World
+import org.apache.logging.log4j.core.jmx.Server
 import kotlin.math.max
 
 class PatternVortexHandler : AbstractVortexHandler {
@@ -101,7 +108,7 @@ class PatternVortexHandler : AbstractVortexHandler {
                 }
                 val recipe=recipe_manager.getFirstMatch(inventory,world)
                 if(recipe.isPresent){
-                    val result=recipe.get().craft(inventory)
+                    val result=recipe.get().craft(inventory,world.registryManager)
                     var count= max(1,(result.count*multiplier).toInt())
                     if(useDurability && result.maxDamage>0)count*=result.maxDamage
                     if(!result.isEmpty)return Recipe(result.item, count, this, world)
@@ -111,9 +118,9 @@ class PatternVortexHandler : AbstractVortexHandler {
         return null
     }
 
-    override fun getRealRecipesExamples(manager: RecipeManager): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>{
+    override fun getRealRecipesExamples(world: World): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>{
         return sequence {
-            recipe_loop@ for (recipe in manager.listAllOfType(RecipeType.CRAFTING)) {
+            recipe_loop@ for (recipe in world.recipeManager.listAllOfType(RecipeType.CRAFTING)) {
                 val materials = MutableList<Ingredient?>(materialCount) { null }
                 val input = MutableList<Ingredient?>(ingredientCount) { null }
                 val ingredients = recipe.ingredients
@@ -137,11 +144,10 @@ class PatternVortexHandler : AbstractVortexHandler {
                     }
                 }
                 else continue@recipe_loop
-
-                val count= max(1,(recipe.output.count*multiplier).toInt())
+                val count= max(1,(recipe.getOutput(world.registryManager).count*multiplier).toInt())
                 yield(
                         input.map { HexVortexHandler.Ingredient(it) }
-                                to List(count) { SpiritHelper.asSpirit(recipe.output.item) }
+                                to List(count) { SpiritHelper.asSpirit(recipe.getOutput(world.registryManager).item) }
                 )
             }
         }
@@ -202,8 +208,9 @@ class PatternVortexHandler : AbstractVortexHandler {
     }
 
     object NONEHANDLE: ScreenHandler(null,-1){
-        override fun transferSlot(player: PlayerEntity?, index: Int): ItemStack
+        override fun quickMove(player: PlayerEntity?, index: Int): ItemStack
             = ItemStack.EMPTY
+
 
         override fun canUse(player: PlayerEntity?): Boolean
             = true

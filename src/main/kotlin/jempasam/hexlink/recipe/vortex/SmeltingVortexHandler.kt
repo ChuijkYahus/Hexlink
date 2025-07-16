@@ -10,6 +10,7 @@ import net.minecraft.recipe.RecipeManager
 import net.minecraft.recipe.RecipeType
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.JsonHelper
+import net.minecraft.world.World
 import kotlin.math.max
 import kotlin.math.min
 
@@ -46,7 +47,7 @@ class SmeltingVortexHandler : AbstractVortexHandler {
                 inventory.setStack(0, item.defaultStack)
                 val cookingRecipe=recipeManager.getFirstMatch(inventory,world)
                 if(cookingRecipe.isPresent){
-                    val result=cookingRecipe.get().craft(inventory)
+                    val result=cookingRecipe.get().craft(inventory, world.registryManager)
                     if(!result.isEmpty){
                         return Recipe(result.item, min(1,(result.count*multiplier).toInt()), this, world)
                     }
@@ -56,12 +57,15 @@ class SmeltingVortexHandler : AbstractVortexHandler {
         return null
     }
 
-    override fun getRealRecipesExamples(manager: RecipeManager): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>{
+    override fun getRealRecipesExamples(world: World): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>>{
         return sequence {
-            for (recipe in manager.listAllOfType(RecipeType.SMELTING))yield(
-                listOf(HexVortexHandler.Ingredient(recipe.ingredients[0])) to
-                        List(max(1,(multiplier*recipe.output.count).toInt())){ SpiritHelper.asSpirit(recipe.output.item)}
-            )
+            for (recipe in world.recipeManager.listAllOfType(RecipeType.SMELTING)){
+                val output = recipe.getOutput(world.registryManager)
+                yield(Pair(
+                    listOf(HexVortexHandler.Ingredient(recipe.ingredients[0])),
+                    List(max(1,(multiplier*output.count).toInt())){ SpiritHelper.asSpirit(output.item) },
+                ))
+            }
         }
     }
 

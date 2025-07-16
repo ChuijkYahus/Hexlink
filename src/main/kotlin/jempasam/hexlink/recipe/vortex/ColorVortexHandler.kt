@@ -3,9 +3,9 @@ package jempasam.hexlink.recipe.vortex
 import com.google.gson.JsonObject
 import jempasam.hexlink.spirit.ColorSpirit
 import jempasam.hexlink.spirit.Spirit
-import net.minecraft.recipe.RecipeManager
 import net.minecraft.server.world.ServerWorld
 import net.minecraft.util.math.ColorHelper.Argb.*
+import net.minecraft.world.World
 
 class ColorVortexHandler : AbstractVortexHandler {
 
@@ -21,7 +21,7 @@ class ColorVortexHandler : AbstractVortexHandler {
         return null
     }
 
-    override fun getRealRecipesExamples(manager: RecipeManager): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>> {
+    override fun getRealRecipesExamples(world: World): Sequence<Pair<List<HexVortexHandler.Ingredient>, List<Spirit>>> {
         return sequenceOf(
             listOf(
                 HexVortexHandler.Ingredient(ColorSpirit(0xFF0000)),

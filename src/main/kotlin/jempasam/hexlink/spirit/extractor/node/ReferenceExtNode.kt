@@ -3,8 +3,8 @@ package jempasam.hexlink.spirit.extractor.node
 import com.google.gson.JsonObject
 import jempasam.hexlink.HexlinkRegistry
 import jempasam.hexlink.spirit.extractor.NodeExtractor
+import net.minecraft.registry.RegistryKey
 import net.minecraft.util.Identifier
-import net.minecraft.util.registry.RegistryKey
 
 /**
  * A spirit extractor node referencing another spirit extractor

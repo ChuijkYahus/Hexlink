@@ -2,7 +2,7 @@ package jempasam.hexlink.spirit
 
 import jempasam.hexlink.HexlinkRegistry
 import net.minecraft.entity.Entity
-import net.minecraft.entity.player.PlayerEntity
+import net.minecraft.entity.LivingEntity
 import net.minecraft.nbt.NbtElement
 import net.minecraft.nbt.NbtString
 import net.minecraft.server.world.ServerWorld
@@ -20,16 +20,16 @@ class SpecialSpirit(val specialType: SpecialType) : Spirit {
 
     override fun hashCode(): Int = specialType.hashCode()
 
-    override fun lookAt(caster: PlayerEntity, world: ServerWorld, position: Vec3d): Boolean
+    override fun lookAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d): Boolean
         = specialType.lookAt.lookAt(caster, world, position)
 
-    override fun lookIn(caster: PlayerEntity, world: ServerWorld, entity: Entity): Boolean
+    override fun lookIn(caster: LivingEntity?, world: ServerWorld, entity: Entity): Boolean
         = specialType.lookIn.lookIn(caster, world, entity)
 
-    override fun manifestAt(caster: PlayerEntity, world: ServerWorld, position: Vec3d, count: Int): Spirit.Manifestation
+    override fun manifestAt(caster: LivingEntity?, world: ServerWorld, position: Vec3d, count: Int): Spirit.Manifestation
         = specialType.manifestAt.manifestAt(caster, world, position, count)
 
-    override fun manifestIn(caster: PlayerEntity, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation
+    override fun manifestIn(caster: LivingEntity?, world: ServerWorld, entity: Entity, count: Int): Spirit.Manifestation
         = specialType.manifestIn.manifestIn(caster, world, entity, count)
 
     override fun serialize(): NbtElement {

@@ -1,17 +1,14 @@
 package jempasam.hexlink.item
 
-import at.petrak.hexcasting.common.items.ItemFocus
-import at.petrak.hexcasting.common.items.storage.ItemFocus
 import at.petrak.hexcasting.common.items.ItemStaff
 import jempasam.hexlink.HexlinkMod
 import jempasam.hexlink.block.HexlinkBlocks
-import jempasam.hexlink.creative_tab.HexlinkCreativeTab
 import net.minecraft.item.BlockItem
 import net.minecraft.item.Item
 import net.minecraft.registry.Registries
+import net.minecraft.registry.Registry
 import net.minecraft.util.Identifier
 import net.minecraft.util.Rarity
-import net.minecraft.registry.Registry
 
 object HexlinkItems {
 
@@ -27,8 +24,6 @@ object HexlinkItems {
     }
 
     val Crystal= make("crystal", ExtractorCatalyzerItem(epicProps()))
-    //val SpirtualStaff=make("spiritual_staff",SpiritualStaffItem(simpleProps()))
-    val MixedPigment=make("mixed_pigment", MixedPigmentItem(stackableProps()))
 
     val Spirit=make("spirit",SingleSpiritContainerItem(stackableProps()))
     val PhilosophicalCrystal=make("philosophical_crystal",InfiniteSpiritItem(epicProps()))

@@ -14,7 +14,6 @@ object HexlinkRecipes {
     }
 
     fun registerRecipes(){
-        create("mixed_pigment", MixedPigmentRecipe.SERIALIZER)
         create("shaped_extractor", ExtractorShapedRecipe.SERIALIZER)
     }
 }

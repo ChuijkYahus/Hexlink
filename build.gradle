@@ -1,7 +1,7 @@
 plugins {
-	id 'fabric-loom' version '1.5-SNAPSHOT'
+	id 'fabric-loom' version '1.11-SNAPSHOT'
 	id 'maven-publish'
-    id "org.jetbrains.kotlin.jvm" version "1.9.0"
+    id "org.jetbrains.kotlin.jvm" version "2.0.21"
 }
 
 version = project.mod_version
@@ -91,11 +91,13 @@ dependencies {
 		exclude module: "phosphor"
 	}
 
+	modRuntimeOnly("maven.modrinth:inline:$inlineVersion-fabric")
+	modLocalRuntime files("$rootProject.rootDir/lib/serialization-hooks-0.4.99999.jar")
 	//modCompileOnly "me.shedaniel:RoughlyEnoughItems-api-fabric:9.1.632"
 
 	modCompileOnly "dev.emi:emi-fabric:${emi_version}:api"
 	modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
-	modLocalRuntime "curse.maven:emi-loot-681783:4105999"
+	// modLocalRuntime "curse.maven:emi-loot-681783:4105999"
 
 	//modCompileOnly "maven.modrinth:moreiotas:${moreiota_version}"
 	//modLocalRuntime "maven.modrinth:moreiotas:${moreiota_version}"

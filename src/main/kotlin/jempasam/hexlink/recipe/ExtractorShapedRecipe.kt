@@ -3,26 +3,28 @@ package jempasam.hexlink.recipe
 import com.google.gson.JsonObject
 import jempasam.hexlink.item.functionnality.ExtractorItem
 import jempasam.hexlink.spirit.extractor.NodeExtractor
-import net.minecraft.inventory.CraftingInventory
+import net.minecraft.inventory.RecipeInputInventory
 import net.minecraft.item.ItemStack
 import net.minecraft.network.PacketByteBuf
 import net.minecraft.recipe.CraftingRecipe
 import net.minecraft.recipe.Ingredient
 import net.minecraft.recipe.RecipeSerializer
 import net.minecraft.recipe.ShapedRecipe
+import net.minecraft.recipe.book.CraftingRecipeCategory
+import net.minecraft.registry.DynamicRegistryManager
 import net.minecraft.util.Identifier
 import net.minecraft.util.collection.DefaultedList
 import net.minecraft.world.World
 
 class ExtractorShapedRecipe(val recipe: ShapedRecipe) : CraftingRecipe {
 
-    override fun craft(craftingInventory: CraftingInventory): ItemStack {
-        val result=recipe.craft(craftingInventory)
+    override fun craft(inventory: RecipeInputInventory, registry: DynamicRegistryManager): ItemStack {
+        val result=recipe.craft(inventory,registry)
         val resultItem=result.item
         if(resultItem is ExtractorItem){
             var extractor: NodeExtractor?=null
-            for(i in 0 until craftingInventory.size()){
-                val stack=craftingInventory.getStack(i)
+            for(i in 0 until inventory.size()){
+                val stack=inventory.getStack(i)
                 val item=stack.item
                 if(item is ExtractorItem){
                     val ext=item.getExtractor(stack)
@@ -34,20 +36,21 @@ class ExtractorShapedRecipe(val recipe: ShapedRecipe) : CraftingRecipe {
         return result
     }
 
-    override fun matches(inventory: CraftingInventory, world: World): Boolean = recipe.matches(inventory,world)
+    override fun matches(inventory: RecipeInputInventory, world: World): Boolean = recipe.matches(inventory,world)
 
     override fun getId(): Identifier = recipe.id
 
+    override fun getCategory(): CraftingRecipeCategory = recipe.category
+
     override fun fits(width: Int, height: Int): Boolean = recipe.fits(width,height)
 
-    override fun getOutput(): ItemStack = recipe.output
+    override fun getOutput(registry: DynamicRegistryManager): ItemStack = recipe.getOutput(registry)
 
     override fun getIngredients(): DefaultedList<Ingredient> = recipe.ingredients
 
     override fun getGroup(): String = recipe.group
 
     override fun getSerializer(): RecipeSerializer<*> = SERIALIZER
-
 
     object SERIALIZER : RecipeSerializer<ExtractorShapedRecipe> {
         val SHAPELESS_SERIALIZER= ShapedRecipe.Serializer()
