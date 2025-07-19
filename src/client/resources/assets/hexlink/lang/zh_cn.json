@@ -109,12 +109,12 @@
   "hexlink.entry.readwrite": "Hexlink 读取与写入",
   "hexlink.page.write_spell": "此图案可将咒术写入特殊法杖。法杖可为物品实体、物品展示框中物品，或施法者手持。",
 
-  "hexlink.page.spirit_extraction.desc": "此法术可通过$(l:hexlink:items/crystals)提取水晶/$等提取催化物从实体中提取灵体，并将其存入$(l:hexlink:items/bag)灵体容器/$。被提取目标决定提出灵体的数量。此法术中的物品可以是物品实体、容器首格中的物品，或者施法者副手中的物品。",
+  "hexlink.page.spirit_extraction.desc": "此法术可通过$(l:hexlink:items/crystals)提取水晶/$等提取催化物从实体中提取灵体，并将其存入$(l:hexlink:items/bag)灵体容器/$。提出灵体的数量由被提取目标决定。此法术中的物品可以是物品实体、物品展示框中的物品、容器首格中的物品，或者施法者副手中的物品。使用时务必小心，一着不慎满盘皆输。",
   "hexlink.page.spirit_extraction.target.desc": "第一参数为被提取对象；第二参数为提取催化物，如提取水晶；第三参数则为灵体容器。",
 
   "hexlink.page.spirit_transfer.desc": "这些图案是操纵和移动灵体的好帮手。灵体存储于灵体容器。物品实体、物品展示框中的物品、施法者手持物品、媒质涡旋，装有灵体容器的容器位置向量等均可视为灵体容器。",
   "hexlink.page.spirit_transfer.transfer.desc": "此图案可将灵体在两灵体容器间转移。第一参数为转移起点，第二参数为转移终点。",
-  "hexlink.page.spirit_transfer.look.desc": "此图案可查看灵体容器中的上一灵体。若容器为空，或者所给实体或位置向量不是灵体来源，则返回 Null。",
+  "hexlink.page.spirit_transfer.look.desc": "此图案可查看灵体容器中上一灵体的类型。若容器为空，或者所给实体或位置向量不是灵体来源，则返回 Null。",
   "hexlink.page.spirit_transfer.look_all.desc": "此图案可查看灵体容器中的所有灵体的类型。若容器为空，或者所给实体或位置向量不是灵体来源，则返回 Null。",
   "hexlink.page.spirit_transfer.count.desc": "此图案可统计灵体容器中某种灵体的存储数量。",
 
@@ -123,8 +123,8 @@
   "hexlink.page.find_nbt.desc": "$(br)[需要安装更多 Iota] 此图案能提取某个方块或实体的特定属性。提取时必须要给定所探寻的灵魂本质的路径。例如，[\"Inventory\",0,\"id\"]。",
 
   "hexlink.page.spirit_manifestation.desc": "这个强力法术能将灵体显形至物理世界。我能通过某实体或在某位置令其显形。",
-  "hexlink.page.spirit_manifestation.target.desc": "$(br)第一参数为被提取的容器，第二参数为需显形灵体的类型，第三参数为显形的强度，最末参数则是显形实体或显形位置。",
-  "hexlink.page.spirit_self_manifestation.self.desc": "此快捷变种会从施法者物品栏中的灵体容器抽取灵体。第一参数为需显形灵体的类型，第二参数为显形的强度，第三参数则是显形实体或显形位置。",
+  "hexlink.page.spirit_manifestation.target.desc": "$(br)第一参数为被提取的容器，第二参数为需显形灵体的类型，第三参数为需显形灵体的数量，最末参数则是显形实体或显形位置。",
+  "hexlink.page.spirit_self_manifestation.self.desc": "此快捷变种会从施法者物品栏中的灵体容器抽取灵体。第一参数为需显形灵体的类型，第二参数为需显形灵体的数量，第三参数则是显形实体或显形位置。",
 
   "hexlink.page.spirit_other": "其他法术",
   "hexlink.page.spirit_vortex.desc": "此图案可召唤$(l:hexlink:items/vortex)媒质涡旋/$。可向其中放入灵体以存储。涡旋中的灵体也有可能融合出新灵体。",
@@ -132,7 +132,7 @@
 
 
   "hexlink.page.crystals": "提取水晶",
-  "hexlink.page.crystals.desc": "提取水晶有助于提取灵体的过程。将其与$(l:hexlink:patterns/spirits/extraction)灵体提取/$配合使用就能提出灵体。能在地牢箱子中发现这类水晶。",
+  "hexlink.page.crystals.desc": "提取水晶有助于提取灵体。将其与$(l:hexlink:patterns/spirits/extraction)灵体提取/$配合使用就能提出灵体。这类水晶会出现在地牢箱子中。",
   "hexlink.page.crystals.block": "此类水晶可以装入方块灵体。可通过此类灵体召唤方块，或是模拟与其的交互。",
   "hexlink.page.crystals.item": "此类水晶可以装入物品灵体。可通过此类灵体模拟使用物品。",
   "hexlink.page.crystals.entity": "此类水晶可以装入实体灵体。可通过此类灵体召唤实体。实体的生命值必须小于等于 4。",
